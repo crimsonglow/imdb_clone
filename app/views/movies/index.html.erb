@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      h1, h2, h3, h4, h5, h6, p {color: white;}
+      body { background-color: #000 }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+
+      <div class="row gy-4">
+        <%= link_to "new movie", new_movie_path %>
+        <% @movies.each do |movie| %>
+          <div class="col-3">
+            <h4><%= link_to movie.title, edit_movie_path(movie) %> </h4>
+            <div class="card" style="width: 15rem;">
+              <!-- <img src="https://upload.wikimedia.org/wikipedia/ru/thumb/6/69/Riddick_poster.jpg/210px-Riddick_poster.jpg" class="card-img-top" alt="img"> -->
+            </div>
+            <p>category: <%= movie.category %></p>
+            <p><%= truncate(movie.description) %></p>
+            <h5>Rating <%= movie.average_rating %></h5>
+              <%= form_with model: @rating, url: rating_path(id: movie.id), method: :put, local: true do |f| %>
+
+                <%= f.text_field :rating %>
+                
+                <%= f.submit %>
+              <h5>My assessment <%=  @rating_for_movie.rating if @rating_for_movie %></h5>
+            <% end %>
+            <!-- <td><%= link_to "Delete", movie, method: :delete %></td> -->
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </body>
+</html>
